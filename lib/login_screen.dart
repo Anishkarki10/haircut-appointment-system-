@@ -11,9 +11,101 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  bool visibility = true; // hide pass
-  bool isLogin = true; // true for Login, false for Register
-  int selectedRole = 0; // 0 = Customer, 1 = Barber, 2 = Admin
+  bool visibility = true; // true means that the password is hidden
+  bool isLogin = true; // true means Log in tab, false means Register tab
+  int selectedRole = 0; // 0 is Customer, 1 is Barber, 2 is Admin
+
+  Color green = Color(0xFF1F5C46);
+  Color grey = Color(0xFF6B7370);
+  Color lightBorder = Color(0xFFE8EAE6);
+
+  TextStyle labelStyle = TextStyle(
+    color: Color(0xFF5F6663),
+    fontSize: 13,
+    fontWeight: FontWeight.bold,
+  );
+
+  // Log in / Register tab
+  Widget tabButton(String text, bool loginTab) {
+    bool selected = isLogin == loginTab;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            isLogin = loginTab;
+          });
+        },
+        child: Container(
+          height: 44,
+          decoration: BoxDecoration(
+            color: selected ? Colors.white : Color(0xFFF1F3F0),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: selected
+                ? [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))]
+                : [],
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                color: selected ? Color(0xFF151A18) : grey,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Customer / Barber / Admin card
+  Widget roleCard(int index, IconData icon, String name) {
+    bool selected = selectedRole == index;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            selectedRole = index;
+          });
+        },
+        child: Container(
+          height: 80,
+          decoration: BoxDecoration(
+            color: selected ? Color(0xFFF1F6F3) : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              width: selected ? 2 : 1,
+              color: selected ? green : lightBorder,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 22, color: selected ? green : grey),
+              SizedBox(height: 8),
+              Text(
+                name,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: selected ? green : grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // border of text field
+  OutlineInputBorder fieldBorder(Color color) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+      borderSide: BorderSide(width: 1, color: color),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +121,14 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 SizedBox(height: 20),
 
-                // ---------- LOGO ----------
+                // LOGO
                 Row(
                   children: [
-                    // TODO: later replace this Container with your logo image:
-                    // Image.asset('assets/images/logo.png', height: 44, width: 44)
                     Container(
                       height: 44,
                       width: 44,
                       decoration: BoxDecoration(
-                        color: Color(0xFF1F5C46),
+                        color: green,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
@@ -56,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'KapalTime',
                       style: TextStyle(
-                        color: Color(0xFF1F5C46),
+                        color: green,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 2,
@@ -67,11 +157,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 40),
 
-                // ---------- HEADING ----------
+                //HEADING
                 Text(
                   'WELCOME',
                   style: TextStyle(
-                    color: Color(0xFF1F5C46),
+                    color: green,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.5,
@@ -89,15 +179,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 8),
                 Text(
                   'Choose your role, then sign in.',
-                  style: TextStyle(
-                    color: Color(0xFF6B7370),
-                    fontSize: 15,
-                  ),
+                  style: TextStyle(color: grey, fontSize: 15),
                 ),
 
                 SizedBox(height: 24),
 
-                // ---------- LOG IN / REGISTER TAB ----------
+                //LOG IN / REGISTER TAB
                 Container(
                   padding: EdgeInsets.all(4),
                   decoration: BoxDecoration(
@@ -106,255 +193,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: Row(
                     children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isLogin = true;
-                            });
-                          },
-                          child: Container(
-                            height: 44,
-                            decoration: BoxDecoration(
-                              color: isLogin == true
-                                  ? Colors.white
-                                  : Color(0xFFF1F3F0),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: isLogin == true
-                                  ? [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6,
-                                  offset: Offset(0, 2),
-                                ),
-                              ]
-                                  : [],
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Log in',
-                                style: TextStyle(
-                                  color: isLogin == true
-                                      ? Color(0xFF151A18)
-                                      : Color(0xFF6B7370),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isLogin = false;
-                            });
-                          },
-                          child: Container(
-                            height: 44,
-                            decoration: BoxDecoration(
-                              color: isLogin == false
-                                  ? Colors.white
-                                  : Color(0xFFF1F3F0),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: isLogin == false
-                                  ? [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6,
-                                  offset: Offset(0, 2),
-                                ),
-                              ]
-                                  : [],
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Register',
-                                style: TextStyle(
-                                  color: isLogin == false
-                                      ? Color(0xFF151A18)
-                                      : Color(0xFF6B7370),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      tabButton('Log in', true),
+                      tabButton('Register', false),
                     ],
                   ),
                 ),
 
                 SizedBox(height: 14),
 
-                // ---------- ROLE SELECTOR ----------
+                //ROLE SELECTOR
                 Row(
                   children: [
-                    // Customer
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedRole = 0;
-                          });
-                        },
-                        child: Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: selectedRole == 0
-                                ? Color(0xFFF1F6F3)
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              width: selectedRole == 0 ? 2 : 1,
-                              color: selectedRole == 0
-                                  ? Color(0xFF1F5C46)
-                                  : Color(0xFFE8EAE6),
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.person_outline,
-                                size: 22,
-                                color: selectedRole == 0
-                                    ? Color(0xFF1F5C46)
-                                    : Color(0xFF6B7370),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                'Customer',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: selectedRole == 0
-                                      ? Color(0xFF1F5C46)
-                                      : Color(0xFF6B7370),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    roleCard(0, Icons.person_outline, 'Customer'),
                     SizedBox(width: 10),
-
-                    // Barber
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedRole = 1;
-                          });
-                        },
-                        child: Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: selectedRole == 1
-                                ? Color(0xFFF1F6F3)
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              width: selectedRole == 1 ? 2 : 1,
-                              color: selectedRole == 1
-                                  ? Color(0xFF1F5C46)
-                                  : Color(0xFFE8EAE6),
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.storefront_outlined,
-                                size: 22,
-                                color: selectedRole == 1
-                                    ? Color(0xFF1F5C46)
-                                    : Color(0xFF6B7370),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                'Barber',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: selectedRole == 1
-                                      ? Color(0xFF1F5C46)
-                                      : Color(0xFF6B7370),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    roleCard(1, Icons.storefront_outlined, 'Barber'),
                     SizedBox(width: 10),
-
-                    // Admin
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedRole = 2;
-                          });
-                        },
-                        child: Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: selectedRole == 2
-                                ? Color(0xFFF1F6F3)
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              width: selectedRole == 2 ? 2 : 1,
-                              color: selectedRole == 2
-                                  ? Color(0xFF1F5C46)
-                                  : Color(0xFFE8EAE6),
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.gpp_good_outlined,
-                                size: 22,
-                                color: selectedRole == 2
-                                    ? Color(0xFF1F5C46)
-                                    : Color(0xFF6B7370),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                'Admin',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: selectedRole == 2
-                                      ? Color(0xFF1F5C46)
-                                      : Color(0xFF6B7370),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    roleCard(2, Icons.gpp_good_outlined, 'Admin'),
                   ],
                 ),
 
                 SizedBox(height: 20),
 
-                // ---------- EMAIL ----------
-                Text(
-                  'Email',
-                  style: TextStyle(
-                    color: Color(0xFF5F6663),
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // EMAIL
+                Text('Email', style: labelStyle),
                 SizedBox(height: 8),
                 TextFormField(
                   controller: emailController,
@@ -362,23 +223,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     setState(() {});
                   },
                   decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.mail_outline,
-                      color: Color(0xFF6B7370),
-                    ),
+                    prefixIcon: Icon(Icons.mail_outline, color: grey),
                     hint: Text(
                       'you@email.com',
                       style: TextStyle(color: Color(0xFF9AA09D), fontSize: 15),
                     ),
                     contentPadding: EdgeInsets.symmetric(vertical: 18),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide(width: 1, color: Color(0xFFE8EAE6)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide(width: 1, color: Color(0xFF1F5C46)),
-                    ),
+                    enabledBorder: fieldBorder(lightBorder),
+                    focusedBorder: fieldBorder(green),
                     filled: true,
                     fillColor: Colors.white,
                   ),
@@ -386,15 +238,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 16),
 
-                // ---------- PASSWORD ----------
-                Text(
-                  'Password',
-                  style: TextStyle(
-                    color: Color(0xFF5F6663),
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // PASSWORD
+                Text('Password', style: labelStyle),
                 SizedBox(height: 8),
                 TextFormField(
                   controller: passwordController,
@@ -403,10 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     setState(() {});
                   },
                   decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.key_outlined,
-                      color: Color(0xFF6B7370),
-                    ),
+                    prefixIcon: Icon(Icons.key_outlined, color: grey),
                     suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
@@ -414,10 +256,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                       },
                       icon: Icon(
-                        visibility == true
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: Color(0xFF6B7370),
+                        visibility == true ? Icons.visibility_off : Icons.visibility,
+                        color: grey,
                       ),
                     ),
                     hint: Text(
@@ -425,14 +265,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(color: Color(0xFF9AA09D), fontSize: 15),
                     ),
                     contentPadding: EdgeInsets.symmetric(vertical: 18),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide(width: 1, color: Color(0xFFE8EAE6)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide(width: 1, color: Color(0xFF1F5C46)),
-                    ),
+                    enabledBorder: fieldBorder(lightBorder),
+                    focusedBorder: fieldBorder(green),
                     filled: true,
                     fillColor: Colors.white,
                   ),
@@ -440,13 +274,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 12),
 
-                // ---------- FORGOT PASSWORD ----------
+                // FORGOT PASSWORD
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
                     'Forgot password?',
                     style: TextStyle(
-                      color: Color(0xFF1F5C46),
+                      color: green,
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                     ),
@@ -455,11 +289,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 24),
 
-                // ---------- LOG IN BUTTON ----------
-                // light green when fields are empty, dark green when both are filled
+                //LOG IN BUTTON
+
                 GestureDetector(
                   onTap: () {
-                    // TODO: add your login code here
+                    // login code here
                   },
                   child: Container(
                     height: 54,
@@ -468,7 +302,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: emailController.text.isEmpty ||
                           passwordController.text.isEmpty
                           ? Color(0xFF9BB5A9)
-                          : Color(0xFF1F5C46),
+                          : green,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
@@ -494,31 +328,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 // ---------- OR DIVIDER ----------
                 Row(
                   children: [
-                    Expanded(
-                      child: Container(height: 1, color: Color(0xFFE8EAE6)),
-                    ),
+                    Expanded(child: Container(height: 1, color: lightBorder)),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
                         'or',
-                        style: TextStyle(
-                          color: Color(0xFF9AA09D),
-                          fontSize: 11,
-                        ),
+                        style: TextStyle(color: Color(0xFF9AA09D), fontSize: 11),
                       ),
                     ),
-                    Expanded(
-                      child: Container(height: 1, color: Color(0xFFE8EAE6)),
-                    ),
+                    Expanded(child: Container(height: 1, color: lightBorder)),
                   ],
                 ),
 
                 SizedBox(height: 16),
 
-                // ---------- GOOGLE BUTTON ----------
+                // GOOGLE BUTTON
                 GestureDetector(
                   onTap: () {
-                    // TODO: add your google sign in code here
+                    // google sign
                   },
                   child: Container(
                     height: 54,
@@ -526,13 +353,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(width: 1, color: Color(0xFFE8EAE6)),
+                      border: Border.all(width: 1, color: lightBorder),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // TODO: later replace this Text('G') with the Google logo image:
-                        // Image.asset('assets/images/google.png', height: 20, width: 20)
                         Text(
                           'G',
                           style: TextStyle(
