@@ -325,7 +325,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 16),
 
-                // ---------- OR DIVIDER ----------
+                // OR DIVIDER
                 Row(
                   children: [
                     Expanded(child: Container(height: 1, color: lightBorder)),

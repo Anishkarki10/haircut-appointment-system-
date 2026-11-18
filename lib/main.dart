@@ -1,3 +1,4 @@
+import 'register_screen.dart';
 import 'login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -7,8 +8,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: Colors.white
           )
       ),
-      home: LoginScreen(),
+      home: RegisterScreen(),
     );
   }
 }
