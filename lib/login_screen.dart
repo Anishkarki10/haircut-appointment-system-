@@ -8,16 +8,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // Controllers for text boxes
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  // Simple state variables
-  bool visibility = true; // true = hide password, false = show password
-  bool isLogin = true; // true = Log in tab, false = Register tab
-  int selectedRole = 0; // 0 = Customer, 1 = Barber, 2 = Admin
+  bool visibility = true;
+  bool isLogin = true;
+  int selectedRole = 0;
 
-  // Colors from the first login design
   Color bgColor = Color(0xFFFCFCFA);
   Color green = Color(0xFF1F5C46);
   Color lightGreen = Color(0xFFF1F6F3);
@@ -30,41 +27,35 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Check if both email and password have text
     bool isFormReady = false;
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       isFormReady = true;
     }
 
-    // Submit button color
     Color submitColor = disabledGreen;
-    if (isFormReady == true) {
+    if (isFormReady) {
       submitColor = green;
     }
 
-    // Submit button text
     String submitText = "Log in";
-    if (isLogin == false) {
+    if (!isLogin) {
       submitText = "Register";
     }
 
-    // Log in tab colors
     Color loginBg = tabBgColor;
     Color loginTextColor = greyText;
-    if (isLogin == true) {
+    if (isLogin) {
       loginBg = Colors.white;
       loginTextColor = darkText;
     }
 
-    // Register tab colors
     Color registerBg = tabBgColor;
     Color registerTextColor = greyText;
-    if (isLogin == false) {
+    if (!isLogin) {
       registerBg = Colors.white;
       registerTextColor = darkText;
     }
 
-    // Customer role card colors
     Color customerBg = Colors.white;
     Color customerBorder = borderColor;
     double customerBorderWidth = 1;
@@ -76,7 +67,6 @@ class _LoginScreenState extends State<LoginScreen> {
       customerColor = green;
     }
 
-    // Barber role card colors
     Color barberBg = Colors.white;
     Color barberBorder = borderColor;
     double barberBorderWidth = 1;
@@ -88,7 +78,6 @@ class _LoginScreenState extends State<LoginScreen> {
       barberColor = green;
     }
 
-    // Admin role card colors
     Color adminBg = Colors.white;
     Color adminBorder = borderColor;
     double adminBorderWidth = 1;
@@ -110,7 +99,6 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               SizedBox(height: 20),
 
-              // 1. LOGO AND APP NAME
               Row(
                 children: [
                   ClipRRect(
@@ -120,14 +108,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 44,
                       width: 44,
                       fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          height: 44,
-                          width: 44,
-                          color: lightGreen,
-                          child: Icon(Icons.image, color: green, size: 22),
-                        );
-                      },
                     ),
                   ),
                   SizedBox(width: 12),
@@ -146,7 +126,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 40),
 
-              // 2. HEADING TEXT
               Text(
                 "WELCOME",
                 style: TextStyle(
@@ -179,7 +158,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 24),
 
-              // 3. LOG IN / REGISTER TABS
               Container(
                 padding: EdgeInsets.all(4),
                 decoration: BoxDecoration(
@@ -250,7 +228,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 14),
 
-              // 4. ROLE SELECTOR CARDS
               Row(
                 children: [
                   Expanded(
@@ -371,7 +348,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 20),
 
-              // 5. EMAIL INPUT
               Text(
                 "Email",
                 style: TextStyle(
@@ -407,7 +383,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 16),
 
-              // 6. PASSWORD INPUT
               Text(
                 "Password",
                 style: TextStyle(
@@ -428,15 +403,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        if (visibility == true) {
-                          visibility = false;
-                        } else {
-                          visibility = true;
-                        }
+                        visibility = !visibility;
                       });
                     },
                     icon: Icon(
-                      visibility == true ? Icons.visibility_off : Icons.visibility,
+                      visibility ? Icons.visibility_off : Icons.visibility,
                       color: greyText,
                     ),
                   ),
@@ -458,7 +429,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 12),
 
-              // 7. FORGOT PASSWORD
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
@@ -474,7 +444,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 24),
 
-              // 8. LOG IN / REGISTER BUTTON
               SizedBox(
                 height: 54,
                 width: double.infinity,
@@ -486,9 +455,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  onPressed: () {
-                    // Login or register code here
-                  },
+                  onPressed: () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -509,7 +476,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 16),
 
-              // 9. OR DIVIDER
               Row(
                 children: [
                   Expanded(
@@ -532,7 +498,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 16),
 
-              // 10. CONTINUE WITH GOOGLE BUTTON
               SizedBox(
                 height: 54,
                 width: double.infinity,
@@ -545,9 +510,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       side: BorderSide(width: 1, color: borderColor),
                     ),
                   ),
-                  onPressed: () {
-                    // Google sign-in code here
-                  },
+                  onPressed: () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -556,9 +519,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 20,
                         width: 20,
                         fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Icon(Icons.g_mobiledata, size: 24, color: Colors.blue);
-                        },
                       ),
                       SizedBox(width: 10),
                       Text(

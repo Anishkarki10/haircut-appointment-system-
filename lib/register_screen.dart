@@ -8,16 +8,13 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  // Controllers for text boxes
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  // Simple state variables
-  bool visibility = true; // true = hide password, false = show password
-  int selectedRole = 0; // 0 = Customer, 1 = Barber (Admin cannot register)
+  bool visibility = true;
+  int selectedRole = 0;
 
-  // Colors from the design
   Color bgColor = Color(0xFFFCFCFA);
   Color green = Color(0xFF1F5C46);
   Color lightGreen = Color(0xFFF1F6F3);
@@ -32,7 +29,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Check if name, email, and password are all filled
     bool isFormReady = false;
     if (nameController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
@@ -40,13 +36,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       isFormReady = true;
     }
 
-    // Create account button color
     Color submitColor = disabledGreen;
-    if (isFormReady == true) {
+    if (isFormReady) {
       submitColor = green;
     }
 
-    // Customer role card colors (enabled)
     Color customerBg = Colors.white;
     Color customerBorder = borderColor;
     double customerBorderWidth = 1;
@@ -58,7 +52,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       customerColor = green;
     }
 
-    // Barber role card colors (enabled)
     Color barberBg = Colors.white;
     Color barberBorder = borderColor;
     double barberBorderWidth = 1;
@@ -70,7 +63,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       barberColor = green;
     }
 
-    // Admin role card colors (disabled on Register page)
     Color adminBg = Colors.white;
     Color adminBorder = disabledCardColor;
     double adminBorderWidth = 1;
@@ -86,7 +78,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               SizedBox(height: 20),
 
-              // 1. LOGO AND APP NAME
               Row(
                 children: [
                   ClipRRect(
@@ -96,14 +87,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 44,
                       width: 44,
                       fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          height: 44,
-                          width: 44,
-                          color: lightGreen,
-                          child: Icon(Icons.image, color: green, size: 22),
-                        );
-                      },
                     ),
                   ),
                   SizedBox(width: 12),
@@ -122,7 +105,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               SizedBox(height: 40),
 
-              // 2. HEADING TEXT
               Text(
                 "WELCOME",
                 style: TextStyle(
@@ -155,7 +137,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               SizedBox(height: 24),
 
-              // 3. LOG IN / REGISTER TABS
               Container(
                 padding: EdgeInsets.all(4),
                 decoration: BoxDecoration(
@@ -164,7 +145,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 child: Row(
                   children: [
-                    // Log in tab (goes back to LoginScreen)
                     Expanded(
                       flex: 1,
                       child: GestureDetector(
@@ -191,7 +171,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    // Register tab (active on this screen)
                     Expanded(
                       flex: 1,
                       child: Container(
@@ -219,10 +198,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               SizedBox(height: 14),
 
-              // 4. ROLE SELECTOR CARDS
               Row(
                 children: [
-                  // Customer card
                   Expanded(
                     flex: 1,
                     child: GestureDetector(
@@ -261,8 +238,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   SizedBox(width: 10),
-
-                  // Barber card
                   Expanded(
                     flex: 1,
                     child: GestureDetector(
@@ -301,8 +276,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   SizedBox(width: 10),
-
-                  // Admin card (not active for registration)
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -338,7 +311,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               SizedBox(height: 20),
 
-              // 5. FULL NAME INPUT
               Text(
                 "Full name",
                 style: TextStyle(
@@ -374,7 +346,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               SizedBox(height: 16),
 
-              // 6. EMAIL INPUT
               Text(
                 "Email",
                 style: TextStyle(
@@ -410,7 +381,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               SizedBox(height: 16),
 
-              // 7. PASSWORD INPUT
               Text(
                 "Password",
                 style: TextStyle(
@@ -431,15 +401,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        if (visibility == true) {
-                          visibility = false;
-                        } else {
-                          visibility = true;
-                        }
+                        visibility = !visibility;
                       });
                     },
                     icon: Icon(
-                      visibility == true ? Icons.visibility_off : Icons.visibility,
+                      visibility ? Icons.visibility_off : Icons.visibility,
                       color: greyText,
                     ),
                   ),
@@ -461,7 +427,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               SizedBox(height: 24),
 
-              // 8. CREATE ACCOUNT BUTTON
               SizedBox(
                 height: 54,
                 width: double.infinity,
@@ -473,9 +438,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  onPressed: () {
-                    // Register code here
-                  },
+                  onPressed: () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
