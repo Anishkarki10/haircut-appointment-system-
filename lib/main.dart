@@ -1,6 +1,7 @@
 import 'register_screen.dart';
 import 'login_screen.dart';
 import 'package:flutter/material.dart';
+import 'customer_discover.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: Colors.white
           )
       ),
-      home: RegisterScreen(),
+      home:   CustomerDiscoverScreen(),
     );
   }
 }
