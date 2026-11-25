@@ -4,6 +4,7 @@ import '../constants/app_images.dart';
 import '../widgets/social_media_card.dart';
 import '../widgets/role_card.dart';
 import 'register_screen.dart';
+import 'search_barber_shops_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -43,6 +44,17 @@ class _LoginScreenState extends State<LoginScreen> {
   // Login button action
   void login() {
     if (formKey.currentState!.validate()) {
+      // Open Search Barber Shops screen when logging in as Barber
+      if (selectedRole == 1) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SearchBarberShopsScreen(),
+          ),
+        );
+        return;
+      }
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Logging in as ${roles[selectedRole]}"),
