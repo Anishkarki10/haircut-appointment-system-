@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'search_barber_shops_screen.dart';
+
 class CustomerDiscoverScreen extends StatefulWidget {
   const CustomerDiscoverScreen({super.key});
 
@@ -101,6 +103,16 @@ class _CustomerDiscoverScreenState extends State<CustomerDiscoverScreen> {
                       children: [
                         Expanded(
                           child: TextField(
+                            readOnly: true,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const SearchBarberShopsScreen(),
+                                ),
+                              );
+                            },
                             decoration: InputDecoration(
                               hintText: "Shop or area",
                               prefixIcon: Icon(Icons.search),
