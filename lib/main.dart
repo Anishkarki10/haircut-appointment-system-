@@ -1,7 +1,6 @@
+import 'register_screen.dart';
+import 'login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:haircut_appointment_booking_system/login_screen.dart';
-import 'profile_screen.dart';
-import 'barber_details_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,18 +8,17 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'KapalTime',
       theme: ThemeData(
-        appBarTheme: AppBarThemeData(
-          backgroundColor: Colors.white,
-        ),
+          appBarTheme: AppBarThemeData(
+              backgroundColor: Colors.white
+          )
       ),
-      home:  LoginScreen(),
+      home: RegisterScreen(),
     );
   }
 }
