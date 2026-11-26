@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haircut_appointment_booking_system/login_screen.dart';
 import 'profile_screen.dart';
 import 'barber_details_screen.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
         ),
       ),
-      home: const BarberDetailsScreen(),
+      home:  LoginScreen(),
     );
   }
 }
